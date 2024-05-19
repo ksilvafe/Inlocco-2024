@@ -1,0 +1,246 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum UserStatus {
+  PENDING
+  ACTIVE
+}
+
+enum TripStatus {
+  FILED
+  PUBLISHED
+  SKETCH
+}
+
+model Users {
+  id                     Int             @id @default(autoincrement())
+  cuid                   String          @unique @default(cuid())
+  email                  String          @unique
+  username               String          @unique
+  password               String
+  twoFactorAuth          Boolean         @default(false) @map("two_factor_auth")
+  acceptedTerms          Boolean         @default(false) @map("accepted_terms")
+  confirmationCode        String          @unique @map("confirmation_code")
+  resetToken             String?         @map("reset_token")
+  status                 UserStatus      @default(PENDING)
+  profile                 Profiles?
+  comments               Comments[]
+  posts                  TravelersPost[]
+  trips                  Trips[]
+  likes                  UserTripLikes[]
+  postSaves              UserPostSaves[]  
+  tripSaves              UserTripSaves[]  
+  followers              Follows[]       @relation("user_followers")
+  following              Follows[]       @relation("user_following")
+  senderNotifications     Notifications[] @relation("sender_notifications")
+  recipientNotifications  Notifications[] @relation("recipient_notifications")
+  createdAt              DateTime        @default(now()) @map("created_at")
+  updatedAt              DateTime        @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Profiles {
+  id           Int      @id @default(autoincrement())
+  cuid         String   @unique @default(cuid())
+  name         String?
+  biography    String?
+  picture      String?
+  birthday     String?
+  phone        String?
+  link         String?
+  gender       Gender   @default(OTHER)
+  address      Address?
+  user         Users    @relation(fields: [userCuid], references: [cuid])
+  userCuid      String      @unique @map("user_cuid")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("profiles")
+}
+
+model Address {
+  id           Int      @id @default(autoincrement())
+  cuid         String   @unique @default(cuid())
+  zipcode      String?
+  country      String?
+  state        String?
+  city         String?
+  neighborhood String?
+  street       String?
+  number       String?
+  complement   String?
+  profile      Profiles @relation(fields: [profileCuid], references: [cuid])
+  profileCuid    String      @unique @map("profile_cuid")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("adresses")
+}
+
+model Trips {
+  id          Int       @id @default(autoincrement())
+  cuid        String    @unique @default(cuid())
+  title        String?
+  description String?
+  posts       Posts[]
+  likes       UserTripLikes[]
+  comments    Comments[]
+  shares      BigInt          @default(0)
+  saves       UserTripSaves[]
+  notifications  Notifications[]
+  status        TripStatus      @default(SKETCH)
+  user        Users    @relation(fields: [userCuid], references: [cuid])
+  userCuid    String      @map("user_cuid")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  @@map("trips")
+}
+
+model Posts {
+  id            Int             @id @default(autoincrement())
+  cuid          String          @unique @default(cuid())
+  description   String?
+  photos        String[]
+  videos        String[]
+  purpose       String[]
+  travelers     TravelersPost[]
+  saves         UserPostSaves[]     
+  trip          Trips?          @relation(fields: [tripCuid], references: [cuid])
+  tripCuid        String?            @map("trip_cuid")
+  location      Locations?      @relation(fields: [locationCuid], references: [cuid])
+  locationCuid   String?             @map("location_cuid")
+  createdAt     DateTime        @default(now()) @map("created_at")
+  updatedAt     DateTime        @updatedAt @map("updated_at")
+
+  @@map("posts")
+}
+
+model Comments {
+  id        Int      @id @default(autoincrement())
+  cuid      String   @unique @default(cuid())
+  text      String
+  user      Users    @relation(fields: [userCuid], references: [cuid])
+  userCuid    String      @map("user_cuid")
+  trip      Trips    @relation(fields: [tripCuid], references: [cuid])
+  tripCuid    String      @map("trip_cuid")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("comments")
+}
+
+model Locations {
+  id          Int      @id @default(autoincrement())
+  cuid        String   @unique @default(cuid())
+  type        String   @default("Point")
+  coordinates Float[] @unique
+  displayName     String? @map("display_name")
+  country     String?
+  countryCode        String? @map("country_code")
+  city        String?
+  post        Posts[]
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("locations")
+}
+
+model Follows {
+  id          Int      @id @default(autoincrement())
+  cuid        String   @unique @default(cuid())
+  follower    Users    @relation("user_followers", fields: [followerCuid], references: [cuid])
+  followerCuid  String      @map("follower_cuid")
+  following   Users    @relation("user_following", fields: [followingCuid], references: [cuid])
+  followingCuid String      @map("following_cuid")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("follows")
+}
+
+model Notifications {
+  id          Int      @id @default(autoincrement())
+  cuid        String   @unique @default(cuid())
+  title       String?
+  message     String
+  sender      Users    @relation("sender_notifications", fields: [senderCuid], references: [cuid])
+  senderCuid    String      @map("sender_cuid")
+  recipient   Users    @relation("recipient_notifications", fields: [recipientCuid], references: [cuid])
+  recipientCuid String      @map("recipient_cuid")
+  trip        Trips?   @relation(fields: [tripCuid], references: [cuid])
+  tripCuid     String? @map("trip_cuid")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("notifications")
+}
+
+model TravelersPost {
+  cuid        String   @unique @default(cuid())
+  post       Posts     @relation(fields: [postCuid], references: [cuid])
+  postCuid     String @map("post_cuid")
+  user   Users @relation(fields: [userCuid], references: [cuid])
+  userCuid String @map("user_cuid")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("travelers_post")
+  @@id([postCuid, userCuid])
+}
+
+model UserTripLikes {
+  cuid        String   @unique @default(cuid())
+  trip       Trips     @relation(fields: [tripCuid], references: [cuid])
+  tripCuid     String @map("trip_cuid")
+  user   Users @relation(fields: [userCuid], references: [cuid])
+  userCuid String @map("user_cuid")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("user_trip_likes")
+  @@id([tripCuid, userCuid])
+}
+
+model UserPostSaves {
+  cuid        String   @unique @default(cuid())
+  post       Posts     @relation(fields: [postCuid], references: [cuid])
+  postCuid     String @map("post_cuid")
+  user   Users @relation(fields: [userCuid], references: [cuid])
+  userCuid String @map("user_cuid")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("user_post_saves")
+  @@id([postCuid, userCuid])
+}
+
+model UserTripSaves {
+  cuid        String   @unique @default(cuid())
+  trip       Trips     @relation(fields: [tripCuid], references: [cuid])
+  tripCuid     String  @map("trip_cuid")
+  user      Users @relation(fields: [userCuid], references: [cuid])
+  userCuid String  @map("user_cuid")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("user_trip_saves")
+  @@id([tripCuid, userCuid])
+}
+

@@ -1,0 +1,1 @@
+{"version":3,"file":"LocationNotFoundError.js","sourceRoot":"","sources":["../../../src/shared/errors/LocationNotFoundError.ts"],"names":[],"mappings":";;;AAAA,2DAAwD;AAExD,MAAa,qBAAsB,SAAQ,mBAAQ;IACjD;QACE,KAAK,CAAC,0BAA0B,EAAE,GAAG,CAAC,CAAC;IACzC,CAAC;CACF;AAJD,sDAIC"}

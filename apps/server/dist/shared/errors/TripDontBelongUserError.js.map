@@ -1,0 +1,1 @@
+{"version":3,"file":"TripDontBelongUserError.js","sourceRoot":"","sources":["../../../src/shared/errors/TripDontBelongUserError.ts"],"names":[],"mappings":";;;AAAA,2DAAwD;AAExD,MAAa,uBAAwB,SAAQ,mBAAQ;IACnD;QACE,KAAK,CAAC,iCAAiC,EAAE,GAAG,CAAC,CAAC;IAChD,CAAC;CACF;AAJD,0DAIC"}

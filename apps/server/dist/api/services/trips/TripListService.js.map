@@ -1,0 +1,1 @@
+{"version":3,"file":"TripListService.js","sourceRoot":"","sources":["../../../../src/api/services/trips/TripListService.ts"],"names":[],"mappings":";;;;;;;;;;;;AAKA,MAAa,eAAe;IAC1B,YAAoB,eAAiC;QAAjC,oBAAe,GAAf,eAAe,CAAkB;IAAG,CAAC;IAEnD,OAAO,CAAC,KAAe;;YAC3B,MAAM,KAAK,GAAG,MAAM,IAAI,CAAC,eAAe,CAAC,QAAQ,CAAC,KAAK,CAAC,CAAC;YACzD,OAAO,KAAK,CAAC;QACf,CAAC;KAAA;CACF;AAPD,0CAOC"}

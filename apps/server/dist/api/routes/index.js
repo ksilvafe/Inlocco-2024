@@ -1,0 +1,24 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const comments_routes_1 = require("./comments.routes");
+const follows_routes_1 = require("./follows.routes");
+const healthcheck_routes_1 = require("./healthcheck.routes");
+const locations_routes_1 = require("./locations.routes");
+const notifications_routes_1 = require("./notifications.routes");
+const posts_routes_1 = require("./posts.routes");
+const session_routes_1 = require("./session.routes");
+const trips_routes_1 = require("./trips.routes");
+const users_routes_1 = require("./users.routes");
+const router = (0, express_1.Router)();
+router.use("/", session_routes_1.sessionRouter);
+router.use("/users", users_routes_1.usersRouter);
+router.use("/posts", posts_routes_1.postsRouter);
+router.use("/trips", trips_routes_1.tripsRouter);
+router.use("/follows", follows_routes_1.followsRouter);
+router.use("/comments", comments_routes_1.commentsRouter);
+router.use("/locations", locations_routes_1.locationsRouter);
+router.use("/healthcheck", healthcheck_routes_1.healthcheckRouter);
+router.use("/notifications", notifications_routes_1.notificationsRouter);
+exports.default = router;
+//# sourceMappingURL=index.js.map
