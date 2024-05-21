@@ -1,0 +1,20 @@
+export const colors = {
+    primary: '#2F3E27',
+    secondary: '#E6CBAE',
+    background: '#FFFFFF',
+    card: '#EFEFEF',
+    text: '#282828',
+    border: '#565656',
+  
+    green: '#3EC001',
+    lightGreen: '#79AE69',
+    yellow: '#FFD645',
+    blue100: '#2B5EE0',
+    blue200: '#83C3FF',
+    red: '#FF5733',
+    black5: 'rgba(0, 0, 0, 0.05)',
+    black25: 'rgba(0, 0, 0, 0.25)',
+    black50: 'rgba(0, 0, 0, 0.50)',
+    black100: 'rgba(0, 0, 0, 1)',
+    black: '#1F2023',
+};
