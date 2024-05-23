@@ -1,4 +1,4 @@
-package com.inloccomob
+package com.knowledge.inlocco
 
 import android.app.Application
 import com.facebook.react.PackageList

@@ -14,7 +14,7 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-target 'inloccomob' do
+target 'inlocco' do
   config = use_native_modules!
 
   use_react_native!(
@@ -23,7 +23,7 @@ target 'inloccomob' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'inloccomobTests' do
+  target 'inloccoTests' do
     inherit! :complete
     # Pods for testing
   end

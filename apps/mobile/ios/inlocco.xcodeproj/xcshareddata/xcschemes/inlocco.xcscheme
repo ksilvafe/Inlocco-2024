@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "inloccomob.app"
-               BlueprintName = "inloccomob"
-               ReferencedContainer = "container:inloccomob.xcodeproj">
+               BuildableName = "inlocco.app"
+               BlueprintName = "inlocco"
+               ReferencedContainer = "container:inlocco.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "inloccomobTests.xctest"
-               BlueprintName = "inloccomobTests"
-               ReferencedContainer = "container:inloccomob.xcodeproj">
+               BuildableName = "inloccoTests.xctest"
+               BlueprintName = "inloccoTests"
+               ReferencedContainer = "container:inlocco.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "inloccomob.app"
-            BlueprintName = "inloccomob"
-            ReferencedContainer = "container:inloccomob.xcodeproj">
+            BuildableName = "inlocco.app"
+            BlueprintName = "inlocco"
+            ReferencedContainer = "container:inlocco.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "inloccomob.app"
-            BlueprintName = "inloccomob"
-            ReferencedContainer = "container:inloccomob.xcodeproj">
+            BuildableName = "inlocco.app"
+            BlueprintName = "inlocco"
+            ReferencedContainer = "container:inlocco.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
