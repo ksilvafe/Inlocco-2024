@@ -2,8 +2,22 @@
  * @format
  */
 
-import {AppRegistry} from 'react-native';
-import {App} from './src/App';
-import {name as appName} from './app.json';
+import {decode, encode} from 'base-64';
+import {AppRegistry, LogBox} from 'react-native';
+import 'react-native-gesture-handler';
+import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 
-AppRegistry.registerComponent(appName, () => App);
+import {name as appName} from './app.json';
+import App from './src/App';
+
+// Ignore log notification by message:
+LogBox.ignoreLogs(['Warning: ...']);
+if (!global.btoa) {
+  global.btoa = encode;
+}
+
+if (!global.atob) {
+  global.atob = decode;
+}
+
+AppRegistry.registerComponent(appName, () => gestureHandlerRootHOC(App));
