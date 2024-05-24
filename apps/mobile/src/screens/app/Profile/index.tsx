@@ -21,7 +21,7 @@ import {
   ScrollView,
 } from 'tamagui';
 import {FileStack, LayoutDashboard} from '@tamagui/lucide-icons';
-import ProfileData from './ProfileData';
+import { ProfileData } from './ProfileData';
 
 export const Profile: React.FC<ProfileScreenProps> = ({navigation, route}) => {
   /*   StatusBar.setBarStyle('light-content');
