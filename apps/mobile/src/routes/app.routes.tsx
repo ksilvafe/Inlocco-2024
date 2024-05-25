@@ -21,10 +21,10 @@ import { SavedTrip } from '../screens/app/SavedTrip';
 import { RoadMap } from '../screens/app/SavedTrip/RoadMap';
 import {Profile} from '../screens/app/Profile';
 
-// import ContinueTrip from '../screens/app/NewPost/ContinueTrip';
-// import PreviewImageAndAddInformation from '../screens/app/NewPost/PreviewImageAndAddInformation';
-// import SelectedMedia from '../screens/app/NewPost/SelectedMedia';
-// import Camera from '../screens/app/NewPost/Camera';
+import { SelectedMedia } from '../screens/app/NewPost/SelectedMedia';
+import { Camera } from '../screens/app/NewPost/Camera';
+import { ContinueTrip } from '../screens/app/NewPost/ContinueTrip';
+import { PreviewImageAndAddInformation } from '../screens/app/NewPost/PreviewImageAndAddInformation';
 
 const Top = createMaterialTopTabNavigator();
 const Tab = createBottomTabNavigator();
@@ -154,19 +154,19 @@ function ProfileStackScreen() {
   );
 }
 
-// function PublishStackScreen() {
-//   return (
-//     <Stack.Navigator screenOptions={stackScreenOptions}>
-//       <Stack.Screen name="Camera" component={Camera} />
-//       <Stack.Screen name="SelectedMedia" component={SelectedMedia} />
-//       <Stack.Screen
-//         name="PreviewImageAndAddInformation"
-//         component={PreviewImageAndAddInformation}
-//       />
-//       <Stack.Screen name="ContinueTrip" component={ContinueTrip} />
-//     </Stack.Navigator>
-//   );
-// }
+function PublishStackScreen() {
+  return (
+    <Stack.Navigator screenOptions={stackScreenOptions}>
+      <Stack.Screen name="Camera" component={Camera} />
+      <Stack.Screen name="SelectedMedia" component={SelectedMedia} />
+      <Stack.Screen
+        name="PreviewImageAndAddInformation"
+        component={PreviewImageAndAddInformation}
+      />
+      <Stack.Screen name="ContinueTrip" component={ContinueTrip} />
+    </Stack.Navigator>
+  );
+}
 
 function NotificationsStackScreen() {
   return (
@@ -241,11 +241,11 @@ export function AppRoutes() {
         component={SearchStackScreen}
         options={tabScreenOptions}
       />
-      {/* <Tab.Screen
+      <Tab.Screen
         name="PublishStackScreen"
         component={PublishStackScreen}
         options={tabScreenOptions}
-      /> */}
+      />
       <Tab.Screen
         name="NotificationsStackScreen"
         component={NotificationsStackScreen}
