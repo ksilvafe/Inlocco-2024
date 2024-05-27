@@ -1,6 +1,14 @@
 # OSX
 #
 .DS_Store
+local.properties
+
+# Idea
+.idea
+
+# Lock
+.lock
+package-lock.json
 
 # Xcode
 #
