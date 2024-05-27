@@ -16,16 +16,16 @@ import {
   Text,
   Square,
 } from 'tamagui';
-// import {
-//   CameraRoll,
-//   PhotoIdentifier,
-// } from '@react-native-camera-roll/camera-roll';
+import {
+  CameraRoll,
+  PhotoIdentifier,
+} from '@react-native-camera-roll/camera-roll';
 import Toast from 'react-native-toast-message';
 import { Button } from '../../../../components/Buttons/Button';
 import {FileImage} from '@tamagui/lucide-icons';
 import React from 'react';
 
-export const Camera: React.FC<{ navigation: any }> = ({navigation}) => {
+export const Camera: React.FC = ({navigation}) => {
   // const camera = useRef<RNCamera>(null);
   // const {
   //   hasPermission: hasCameraPermission,
@@ -37,7 +37,7 @@ export const Camera: React.FC<{ navigation: any }> = ({navigation}) => {
   // } = useMicrophonePermission();
   // const device = useCameraDevice('back');
 
-  const [firstItemGalery, setFirstItemGalery] = useState<null>();
+  const [firstItemGalery, setFirstItemGalery] = useState<PhotoIdentifier>();
 
   // const loadPermissions = () => {
   //   if (!hasCameraPermission) {
@@ -47,80 +47,80 @@ export const Camera: React.FC<{ navigation: any }> = ({navigation}) => {
   //     requestMicrophonePermission();
   //   }
   // };
-  // useEffect(() => {
-  //   //const devices = RNCamera.getAvailableCameraDevices();
-  //   loadPermissions();
+  useEffect(() => {
+    //const devices = RNCamera.getAvailableCameraDevices();
+    //loadPermissions();
 
-  //   CameraRoll.getPhotos({
-  //     first: 1,
-  //     assetType: 'Photos',
-  //   })
-  //     .then(r => {
-  //       setFirstItemGalery(r.edges[0]);
-  //     })
-  //     .catch(err => {
-  //       console.error(err);
-  //     });
-  // }, []);
+    CameraRoll.getPhotos({
+      first: 1,
+      assetType: 'Photos',
+    })
+      .then(r => {
+        setFirstItemGalery(r.edges[0]);
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }, []);
 
-  if (null == null) {
-    return (
-      <SafeAreaView>
-        <YStack m={10} gap={10}>
-          <H1 p={10}>Nenhum dispositivo de camera encontrado.</H1>
-          <Button
-            title="Ir para galeria"
-            onPress={() => navigation.navigate('SelectedMedia')}
-          />
-          <TButton
-            color={'$primary'}
-            backgroundColor={'$secondary'}
-            onPress={() => navigation.goBack()}>
-            Voltar
-          </TButton>
-        </YStack>
-      </SafeAreaView>
-    );
-  }
+  // if (null == null) {
+  //   return (
+  //     <SafeAreaView>
+  //       <YStack m={10} gap={10}>
+  //         <H1 p={10}>Nenhum dispositivo de camera encontrado.</H1>
+  //         <Button
+  //           title="Ir para galeria"
+  //           onPress={() => navigation.navigate('SelectedMedia')}
+  //         />
+  //         <TButton
+  //           color={'$primary'}
+  //           backgroundColor={'$secondary'}
+  //           onPress={() => navigation.goBack()}>
+  //           Voltar
+  //         </TButton>
+  //       </YStack>
+  //     </SafeAreaView>
+  //   );
+  // }
 
-  const handleNavigateToContinueTrip = (selectedMedia: any[]) =>
+  const handleNavigateToContinueTrip = (selectedMedia: PhotoIdentifier[]) =>
     navigation.navigate('ContinueTrip', {
       selectedMedia,
-    });
+  });
 
   const handleNavigateSelectMedia = () => navigation.navigate('SelectedMedia');
 
   const handleNavigateSavedTrip = () => navigation.navigate('SavedTrip');
 
   const savePhotoOnCameraRoll = async (file: any) => {
-    // await CameraRoll.save(`file://${file.path}`, {
-    //   type: 'photo',
-    // });
+    await CameraRoll.save(`file://${file.path}`, {
+      type: 'photo',
+    });
   };
 
   const takePhotos = async () => {
-    // if (camera.current !== null) {
-    //   const file = await camera.current.takePhoto();
-    //   await savePhotoOnCameraRoll(file);
+    if (camera.current !== null) {
+      const file = await camera.current.takePhoto();
+      await savePhotoOnCameraRoll(file);
 
-    //   CameraRoll.getPhotos({
-    //     first: 1,
-    //     assetType: 'Photos',
-    //   })
-    //     .then(r => {
-    //       handleNavigateToContinueTrip([r.edges[0]]);
-    //     })
-    //     .catch(err => {
-    //       console.error(err);
-    //     });
-    // } else {
-    //   Toast.show({
-    //     type: 'error',
-    //     text1: 'Ocorreu um erro',
-    //     text2: 'Nao foi possivel conectar com o seu dispositivo de camera',
-    //     position: 'bottom',
-    //   });
-    // }
+      CameraRoll.getPhotos({
+        first: 1,
+        assetType: 'Photos',
+      })
+        .then(r => {
+          handleNavigateToContinueTrip([r.edges[0]]);
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    } else {
+      Toast.show({
+        type: 'error',
+        text1: 'Ocorreu um erro',
+        text2: 'Nao foi possivel conectar com o seu dispositivo de camera',
+        position: 'bottom',
+      });
+    }
   };
 
   return (

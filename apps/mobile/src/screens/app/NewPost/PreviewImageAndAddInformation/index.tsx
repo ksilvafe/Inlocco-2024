@@ -7,7 +7,7 @@ import { SelectedMediaScreenProps } from '../../../../@types/screens';
 import { ListTagInput } from '../../../../components/Inputs/ListTagInput';
 import { TextArea } from '../../../../components/Inputs/TextArea';
 
-// import {PhotoIdentifier} from '@react-native-camera-roll/camera-roll';
+import {PhotoIdentifier} from '@react-native-camera-roll/camera-roll';
 import {ActivityIndicator, Alert, View} from 'react-native';
 import {Image} from 'react-native-compressor';
 import Toast from 'react-native-toast-message';
@@ -91,7 +91,7 @@ export const PreviewImageAndAddInformation: React.FC<SelectedMediaScreenProps> =
     formState: {errors, touchedFields},
   } = useForm({
     defaultValues: {
-      fields: selectedMedia?.map((item: any) => {
+      fields: selectedMedia?.map((item: PhotoIdentifier) => {
         return {
           photo: item,
           travelers: [],
@@ -232,7 +232,7 @@ export const PreviewImageAndAddInformation: React.FC<SelectedMediaScreenProps> =
     navigation.goBack();
   };
 
-  const handlePressPhotoItem = (item: any, index: number) => {
+  const handlePressPhotoItem = (item: PhotoIdentifier, index: number) => {
     setCurrentIndex(index);
   };
 
@@ -309,7 +309,7 @@ export const PreviewImageAndAddInformation: React.FC<SelectedMediaScreenProps> =
               />
             </PhotoContainer>
           )}
-          keyExtractor={(item: any) => String(item.node.image.uri)}
+          keyExtractor={(item: PhotoIdentifier) => String(item.node.image.uri)}
         />
 
         <Title>{trip?.title}</Title>

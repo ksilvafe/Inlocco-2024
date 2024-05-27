@@ -1,7 +1,7 @@
-// import {
-//   CameraRoll,
-//   PhotoIdentifier,
-// } from '@react-native-camera-roll/camera-roll';
+import {
+  CameraRoll,
+  PhotoIdentifier,
+} from '@react-native-camera-roll/camera-roll';
 import React, {useEffect, useState} from 'react';
 import {PermissionsAndroid, Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -23,8 +23,8 @@ export const SelectedMedia: React.FC<SelectedMediaScreenProps> = ({
   navigation,
   route,
 }) => {
-  const [photos, setPhotos] = useState<any[]>([]);
-  const [selectedMedia, setSelectedMedia] = useState<any[]>([]);
+  const [photos, setPhotos] = useState<PhotoIdentifier[]>([]);
+  const [selectedMedia, setSelectedMedia] = useState<PhotoIdentifier[]>([]);
 
   const handleClose = () => {
     navigation.navigate('Camera');
@@ -50,7 +50,7 @@ export const SelectedMedia: React.FC<SelectedMediaScreenProps> = ({
     return status === 'granted';
   }
 
-  const handleSelectGaleryItem = (item: any) => {
+  const handleSelectGaleryItem = (item: PhotoIdentifier) => {
     let arr = [...selectedMedia];
     if (arr.includes(item)) {
       arr = arr.filter(arrItem => arrItem !== item);
@@ -60,7 +60,7 @@ export const SelectedMedia: React.FC<SelectedMediaScreenProps> = ({
     setSelectedMedia(arr);
   };
 
-  const renderItem = ({item}: {item: any}) => {
+  const renderItem = ({item}: {item: PhotoIdentifier}) => {
     const isSelected = selectedMedia.includes(item);
     return (
       <GaleryItemContainer onPress={() => handleSelectGaleryItem(item)}>
@@ -77,19 +77,20 @@ export const SelectedMedia: React.FC<SelectedMediaScreenProps> = ({
 
   const loadPhotos = async () => {
     if (Platform.OS === 'android' && !(await hasAndroidPermission())) {
+      console.log('Permission denied', hasAndroidPermission());
       return;
     }
-    // CameraRoll.getPhotos({
-    //   first: 1000,
-    //   assetType: 'Photos',
-    // })
-    //   .then(r => {
-    //     setPhotos(r.edges);
-    //     setSelectedMedia([r.edges[0]]);
-    //   })
-    //   .catch(err => {
-    //     //Error Loading Images
-    //   });
+    CameraRoll.getPhotos({
+      first: 1000,
+      assetType: 'Photos',
+    })
+      .then(r => {
+        setPhotos(r.edges);
+        setSelectedMedia([r.edges[0]]);
+      })
+      .catch(err => {
+        //Error Loading Images
+      });
   };
 
   useEffect(() => {
@@ -125,7 +126,7 @@ export const SelectedMedia: React.FC<SelectedMediaScreenProps> = ({
               }}
             />
           )}
-          keyExtractor={(item: any) => String(item.node.image.uri)}
+          keyExtractor={(item: PhotoIdentifier) => String(item.node.image.uri)}
         />
 
         <ListGalery
@@ -133,7 +134,7 @@ export const SelectedMedia: React.FC<SelectedMediaScreenProps> = ({
           ListHeaderComponent={<Title>Selecionar</Title>}
           data={photos}
           renderItem={renderItem}
-          keyExtractor={(item: any) => String(item.node.image.uri)}
+          keyExtractor={(item: PhotoIdentifier) => String(item.node.image.uri)}
         />
       </Content>
     </Container>
