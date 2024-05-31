@@ -5,7 +5,7 @@ import {Alert, GestureResponderEvent, TouchableOpacity} from 'react-native';
 import Toast from 'react-native-toast-message';
 import Icon from 'react-native-vector-icons/Feather';
 import {useMutation} from 'react-query';
-import {Text, XStack, YStack} from 'tamagui';
+import {Text, XStack, YStack, View} from 'tamagui';
 import {HOST, api} from '../services/api';
 import {IconProfile} from './IconProfile';
 
@@ -81,28 +81,33 @@ export const ProfileReference: React.FC<IProfileReference> = ({
 
   return (
     <TouchableOpacity onPress={onPress}>
-      <XStack ai="center" jc="space-between" gap={'$2.5'} f={1}>
-        <XStack>
+      <XStack ai="center"  gap="$2.5">
+        <XStack ai="center">
           <IconProfile uri={`${HOST}/${picture}`} size={size} />
-
-          <YStack f={1} jc="center" ml={'$2.5'}>
+          <YStack jc="center" ml="$2.5" f={1}>
             <Text
               numberOfLines={1}
               color="$text"
               fontSize={getTokens().fontSize.$regular}
-              fontWeight={'bold'}>
+              fontWeight="bold"
+            >
               {name}
             </Text>
             <Text
               numberOfLines={1}
               color="$text"
-              fontSize={getTokens().fontSize.$regular}>
+              fontSize={getTokens().fontSize.$regular}
+              maxWidth="100%">
               @{username}
             </Text>
           </YStack>
         </XStack>
-        <Icon name="more-horizontal" size={24} onPress={handleModal} />
+        <View style={{ flex: 1 }} />
+        <View style={{ marginLeft: 'auto', marginRight: '$2.5' }}>
+          <Icon name="more-horizontal" size={24} onPress={handleModal} />
+        </View>
       </XStack>
     </TouchableOpacity>
-  );
+  );  
+  
 };
