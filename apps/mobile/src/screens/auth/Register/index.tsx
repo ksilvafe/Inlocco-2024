@@ -20,6 +20,7 @@ import {useMutation} from 'react-query';
 import {api} from '../../../services/api';
 import {useAuth} from '../../../contexts/auth';
 import {Platform} from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 type IRegisterData = {username: string; email: string; password: string};
 
@@ -85,43 +86,44 @@ export const Register: React.FC<RegisterScreenProps> = ({navigation}) => {
     <Container>
       <AppName>inLocco</AppName>
       <Content>
-        <Form behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-          <Title>Crie sua conta</Title>
-          <Input
-            register={register('username')}
-            name="username"
-            placeholder="seu nome de usuario"
-            control={control}
-            title="Usuário"
-            autoCapitalize="none"
-            errors={errors.username}
-            touched={touchedFields.username}
-          />
-          <Input
-            register={register('email')}
-            name="email"
-            autoCapitalize="none"
-            keyboardType="email-address"
-            placeholder="mail@mail.com"
-            title="Email"
-            control={control}
-            errors={errors.email}
-            touched={touchedFields.email}
-          />
-          <Input
-            register={register('password')}
-            name="password"
-            title="Senha"
-            placeholder="*******"
-            secureTextEntry
-            control={control}
-            errors={errors.password}
-            touched={touchedFields.password}
-          />
+      <KeyboardAwareScrollView>
+          <Form behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+            <Title>Crie sua conta</Title>
+            <Input
+              register={register('username')}
+              name="username"
+              placeholder="seu nome de usuario"
+              control={control}
+              title="Usuário"
+              autoCapitalize="none"
+              errors={errors.username}
+              touched={touchedFields.username}
+            />
+            <Input
+              register={register('email')}
+              name="email"
+              autoCapitalize="none"
+              keyboardType="email-address"
+              placeholder="mail@mail.com"
+              title="Email"
+              control={control}
+              errors={errors.email}
+              touched={touchedFields.email}
+            />
+            <Input
+              register={register('password')}
+              name="password"
+              title="Senha"
+              placeholder="*******"
+              secureTextEntry
+              control={control}
+              errors={errors.password}
+              touched={touchedFields.password}
+              />
 
-          <Button title="Cadastrar" onPress={handleSubmit(onSubmit)} />
-        </Form>
-
+            <Button title="Cadastrar" onPress={handleSubmit(onSubmit)} />
+          </Form>
+      </KeyboardAwareScrollView>
         <TextContainer>
           <Text>Já tem uma conta?</Text>
           <TextButton title=" Entre" onPress={handleNavigateToLogin} />
