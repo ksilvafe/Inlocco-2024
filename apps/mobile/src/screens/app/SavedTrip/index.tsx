@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {useNavigation} from '@react-navigation/native';
 import {ActivityIndicator, Alert} from 'react-native';
@@ -26,6 +26,7 @@ export const SavedTrip: React.FC = () => {
   const navigation = useNavigation();
   const [refreshing, setRefreshing] = useState(false);
   const [tabActive, setTabActive] = useState('Roteiros');
+  const [localTrips, setLocalTrips] = useState<ITrip[]>([]);
 
   function handleTab(value: string) {
     setTabActive(value);
@@ -127,7 +128,17 @@ export const SavedTrip: React.FC = () => {
     const res = await api.get('/users/tripsSaved');
     setRefreshing(false);
     return res.data;
+  }, {
+    onSuccess: ( data ) => {
+      setLocalTrips(data);
+    }
   });
+
+  useEffect(() => {
+    if (tripsSavedData) {
+      setLocalTrips(tripsSavedData);
+    }
+  }, [tripsSavedData]);
 
   if (isError) {
     Toast.show({
@@ -141,6 +152,10 @@ export const SavedTrip: React.FC = () => {
   if (isLoading) {
     return <ActivityIndicator />;
   }
+
+  const sortedTripsSavedData = tripsSavedData?.slice().sort((a, b) => {
+    return new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime();
+  });
 
   return (
     <Container>
@@ -156,7 +171,7 @@ export const SavedTrip: React.FC = () => {
         </Header>
 
         <List
-          data={tripsSavedData}
+          data={sortedTripsSavedData}
           renderItem={renderTripsSavedItem}
           keyExtractor={(item: ITrip) => item.cuid}
         />

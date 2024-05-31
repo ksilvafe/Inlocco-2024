@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-import {XStack, YStack} from 'tamagui';
+import {View, XStack, YStack} from 'tamagui';
 import {IFeedPost} from '../../@types/components';
 import {useMutation} from 'react-query';
 import {HOST, api} from '../../services/api';
@@ -69,8 +69,8 @@ export const FeedPost: React.FC<IFeedPost> = (props: IFeedPost) => {
   };
 
   return (
-    <YStack gap="$2" mb={'$3'}>
-      <XStack maw={'50%'}>
+    <YStack gap="$2" mb="$3">
+      <XStack maw="50%">
         <ProfileReference
           onPress={handleNavigateToProfileScreen}
           picture={user.profile?.picture}
@@ -79,13 +79,15 @@ export const FeedPost: React.FC<IFeedPost> = (props: IFeedPost) => {
           size="$2.5"
         />
       </XStack>
-
+  
       <TouchableOpacity {...props}>
-        <LikeButton liked={liked} handleLikePost={handleLikePost} />
-        <XStack jc="center" ai="center">
+        <XStack jc="center" ai="center" position="relative">
           <ImageGrid uri={`${HOST}/${posts[0]?.photos[0]}`} />
+          <View style={{ position: 'absolute', top: 0, right: 0 }}>
+            <LikeButton liked={liked} handleLikePost={handleLikePost} />
+          </View>
         </XStack>
       </TouchableOpacity>
     </YStack>
-  );
+  );  
 };
